@@ -52,3 +52,9 @@ int main(){
         cout << dis[i] << '\n';
     }
 }
+
+/*
+    ids(problem):
+        for depth in 0 to inf do:
+            return dls(problem,depth)
+*/
