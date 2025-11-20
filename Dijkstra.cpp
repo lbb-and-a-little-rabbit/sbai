@@ -54,3 +54,16 @@ int main(){
     }
 }
 
+/*
+    Best-First Search:
+        f(n) = h(n) → GBFS
+
+        f(n) = g(n) + h(n) → A*
+
+        f(n) = g(n) → Dijkstra
+
+        f(n) = depth → DFS
+
+        f(n) = 时间戳 → BFS
+*/
+

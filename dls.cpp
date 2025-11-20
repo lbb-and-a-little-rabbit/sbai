@@ -56,5 +56,6 @@ int main(){
 /*
     ids(problem):
         for depth in 0 to inf do:
-            return dls(problem,depth)
+            res <- dls(problem,depth)
+            if(res) return res
 */
