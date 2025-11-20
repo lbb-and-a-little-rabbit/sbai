@@ -16,6 +16,8 @@ void add(int u,int v,int w){
     adj[v].push_back({u,w});
 }
 
+//下面的A*,GBFS实现pq构造依赖外部数组导致pq更新不及时可能会导致bug 
+
 void AStarSearch(){
     g[start]=0;
 
@@ -53,6 +55,38 @@ void AStarSearch(){
     }
 }
 
+//下面给出安全实现：
+
+void AStarSearch_safer() {
+    g[start] = 0;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+    pq.push({heuristic[start], start}); //(f=h+g,node),此处g=0,省略
+
+    while (!pq.empty()) {
+        auto [f, cur] = pq.top();
+        pq.pop();
+
+        if (vis[cur]) continue;
+        vis[cur] = true;
+
+        if (cur == goal) {
+            for (int v = cur; v != -1; v = parent[v])
+                path.push_back(v);
+            reverse(path.begin(), path.end());
+            return;
+        }
+
+        for (auto [v, w] : adj[cur]) {
+            if (g[cur] + w < g[v]) {
+                g[v] = g[cur] + w;
+                parent[v] = cur;
+                pq.push({g[v] + heuristic[v], v});
+            }
+        }
+    }
+}
+
+
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -72,6 +106,16 @@ int main(){
     }
     cin >> start >> goal;
     AStarSearch();
+    for(int i=0;i<path.size();i++){
+        cout << path[i] << ' ';
+    }
+    cout << '\n';
+
+    adj.assign(n,{});
+    vis.assign(n,false);
+    parent.assign(n,-1);
+    g.assign(n,1e9);
+    AStarSearch_safer();
     for(int i=0;i<path.size();i++){
         cout << path[i] << ' ';
     }
