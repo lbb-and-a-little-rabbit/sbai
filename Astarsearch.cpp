@@ -21,6 +21,7 @@ void AStarSearch(){
 
     auto cmp=[&](int a,int b){
         return g[a]+heuristic[a]>g[b]+heuristic[b];//去掉heuristic即为Dijkstra/UCS
+                                                   //return g[a]+w*heuristic[a]>g[b]+w*heuristic[b];加权A*，不保证最优解，更快，w->inf 退化为GBFS
     };
     priority_queue<int,vector<int>,decltype(cmp)> pq(cmp);
     pq.push(start);
