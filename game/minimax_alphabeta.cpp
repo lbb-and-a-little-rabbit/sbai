@@ -132,6 +132,46 @@ int alphaBeta(const Board& board, int depth, int alpha, int beta, bool maximizin
     }
 }
 
+/*
+    min_max多层写法：
+int alphaBeta(const Board& board, int depth, int alpha, int beta) {
+
+    // 终止条件
+    if (depth == 0 || board.isTerminal()) {
+        return board.evaluate();
+    }
+
+    // 如果当前轮到 MAX
+    if (board.currentPlayer == MAX_PLAYER) {
+
+        int best = -INF;
+
+        for (Move m : board.generateMoves()) {
+            int value = alphaBeta(board.applyMove(m), depth - 1, alpha, beta);
+            best = std::max(best, value);
+            alpha = std::max(alpha, value);
+            if (beta <= alpha) break; // 剪枝
+        }
+        return best;
+    }
+
+    // 如果当前轮到 MIN
+    else {
+
+        int best = INF;
+
+        for (Move m : board.generateMoves()) {
+            int value = alphaBeta(board.applyMove(m), depth - 1, alpha, beta);
+            best = std::min(best, value);
+            beta = std::min(beta, value);
+            if (beta <= alpha) break; // 剪枝
+        }
+        return best;
+    }
+}
+
+*/
+
 // 为 AI 选择最佳走法
 Move findBestMove(const Board& board, int depth) {
     int bestValue = std::numeric_limits<int>::min();
